@@ -1,0 +1,30 @@
+{:duct.profile/base
+ {:duct.core/project-ns todo-api
+
+  :duct.router/ataraxy
+  ; Routing Setting
+  {:routes
+   {[:get "/todos"] [:todo-api.handler.todo/fetchAll]
+    [:get "/todo/" id] [:todo-api.handler.todo/fetchOne ^int id]
+    [:post "/todo" {body :body-params}] [:todo-api.handler.todo/create body]
+    [:delete "/todo/" id] [:todo-api.handler.todo/delete ^int id]
+    [:put "/todo/" id {body :body-params}] [:todo-api.handler.todo/update ^int id body]
+    [:patch "/todo/changeStatus/" id {body :body-params}] [:todo-api.handler.todo/changeStatus ^int id body] }}
+   ; Handler Interface?
+  :todo-api.handler.todo/fetchAll {:db #ig/ref :duct.database/sql}
+  :todo-api.handler.todo/create {:db #ig/ref :duct.database/sql}
+  :todo-api.handler.todo/fetchOne {:db #ig/ref :duct.database/sql}
+  :todo-api.handler.todo/delete {:db #ig/ref :duct.database/sql}
+  :todo-api.handler.todo/update {:db #ig/ref :duct.database/sql}
+  :todo-api.handler.todo/changeStatus {:db #ig/ref :duct.database/sql}
+  }
+
+ :duct.profile/dev   #duct/include "dev"
+ :duct.profile/local #duct/include "local"
+ :duct.profile/prod  {}
+
+ :duct.module/logging {}
+ :duct.module.web/api
+ {}
+ :duct.module/sql
+ {}}

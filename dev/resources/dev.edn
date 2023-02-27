@@ -1,0 +1,16 @@
+{:duct.database.sql/hikaricp
+ {:jdbc-url "jdbc:postgresql://localhost:5432/practice"
+  :username "root"
+  :password "password"
+  :stringtype "unspecified"}
+
+ :duct.migrator/ragtime
+ {:migrations [#ig/ref :todo.migration/create-todos]}
+
+ ; https://github.com/weavejester/ragtime
+ [:duct.migrator.ragtime/sql :todo.migration/create-todos]
+ {:up ["Create Table todos (id SERIAL PRIMARY KEY, title VARCHAR NOT NULL, limit_date DATE, completed BOOLEAN NOT NULL DEFAULT false)"
+       "INSERT INTO todos (title, limit_date) values ('TEST_TASK1', now() + cast('5 days' as INTERVAL))"
+       "INSERT INTO todos (title, limit_date) values ('TEST_TASK1', now() + cast('1 days' as INTERVAL))"]
+  :down ["DROP TABLE todos"]}
+ }

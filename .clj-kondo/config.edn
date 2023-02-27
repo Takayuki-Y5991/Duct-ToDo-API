@@ -1,0 +1,8 @@
+{:output {:exclude-files ["dev" ".cljstyle"]}
+ :lint-as {:rum.core/defc clojure.core/defn
+           :rum.core/defcs clj-kondo.lint-as/def-catch-all
+           :rum.core/defcontext clojure.core/def
+           :rum.core/with-context clojure.core/with-open
+           :rum.core/bind-context clojure.core/binding
+           :veneta.test-helper/with-system clj-kondo.lint-as/def-catch-all
+           :cljss.core/defstyles clojure.core/defn}}
