@@ -4,13 +4,21 @@
   :duct.router/ataraxy
   ; Routing Setting
   {:routes
-   {[:get "/todos"] [:todo-api.handler.todo/fetchAll]
-    [:get "/todo/" id] [:todo-api.handler.todo/fetchOne ^int id]
-    [:post "/todo" {body :body-params}] [:todo-api.handler.todo/create body]
-    [:delete "/todo/" id] [:todo-api.handler.todo/delete ^int id]
-    [:put "/todo/" id {body :body-params}] [:todo-api.handler.todo/update ^int id body]
-    [:patch "/todo/changeStatus/" id {body :body-params}] [:todo-api.handler.todo/changeStatus ^int id body] }}
-   ; Handler Interface?
+   {[:get "/todos"]                                       [:todo-api.handler.todo/fetchAll]
+    [:get "/todo/" id]                                    [:todo-api.handler.todo/fetchOne ^int id]
+    [:post "/todo" {body :body-params}]                   [:todo-api.handler.todo/create body]
+    [:delete "/todo/" id]                                 [:todo-api.handler.todo/delete ^int id]
+    [:put "/todo/" id {body :body-params}]                [:todo-api.handler.todo/update ^int id body]
+    [:patch "/todo/changeStatus/" id {body :body-params}] [:todo-api.handler.todo/changeStatus ^int id body]}
+   :middleware [
+                [ring.middleware.cors/wrap-cors :access-control-allow-origin ["http://localhost:8700"]
+                 :access-control-allow-methods [:get :post :put :delete :patch]
+                 :access-control-allow-credentials true]
+                [ring.middleware.defaults/wrap-defaults]
+                [ring.middleware.json/wrap-json-params]
+                ring.middleware.json/wrap-json-response]}
+
+  ; Handler Interface?
   :todo-api.handler.todo/fetchAll {:db #ig/ref :duct.database/sql}
   :todo-api.handler.todo/create {:db #ig/ref :duct.database/sql}
   :todo-api.handler.todo/fetchOne {:db #ig/ref :duct.database/sql}
@@ -19,9 +27,9 @@
   :todo-api.handler.todo/changeStatus {:db #ig/ref :duct.database/sql}
   }
 
- :duct.profile/dev   #duct/include "dev"
- :duct.profile/local #duct/include "local"
- :duct.profile/prod  {}
+ :duct.profile/dev    #duct/include "dev"
+ :duct.profile/local  #duct/include "local"
+ :duct.profile/prod   {}
 
  :duct.module/logging {}
  :duct.module.web/api

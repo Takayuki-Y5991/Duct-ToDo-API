@@ -6,6 +6,7 @@
 (defmethod ig/init-key ::fetchAll [_ {:keys [db]}]
   (fn [_]
     (let [result (todo/fetchAll db)]
+      (println result)
       [::response/ok result])
     )
   )
