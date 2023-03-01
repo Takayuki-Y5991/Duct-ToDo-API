@@ -9,7 +9,8 @@
                  [duct/module.sql "0.6.1"]
                  [duct/module.web "0.7.3"]
                  [org.postgresql/postgresql "42.2.19"]
-                 [org.clojure/java.jdbc "0.7.12"]]
+                 [org.clojure/java.jdbc "0.7.12"]
+                 [ring-core "0.1.13"]]
   :plugins [[duct/lein-duct "0.12.3"]]
   :main ^:skip-aot todo-api.main
   :resource-paths ["resources" "target/resources"]
